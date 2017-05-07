@@ -3,6 +3,7 @@ import Phaser from 'phaser-ce'
 const docElement = document.documentElement
 const width = docElement.clientWidth
 const height = docElement.clientHeight
+let currentTime = 0;
 
 // let stage1 = true;
 // let stage2 = true;
@@ -17,6 +18,44 @@ let stage3 = false;
 let stage4 = false;
 let stage5 = false;
 let stage6 = false;
+
+let rightBranchCoordinates = {
+    branch1: {
+        w: 262,
+        h: 536
+    },
+    branch2: {
+        w: 257,
+        h: 619 - 90 * 2
+    },
+    branch3: {
+        w: 257,
+        h: 619 - 90 * 3
+    },
+    branch4: {
+        w: 257,
+        h: 619 - 90 * 4
+    }
+}
+
+let leftBranchCoordinates = {
+    branch1: {
+        w: (width) / 2 + 55,
+        h: height - 200
+    },
+    branch2: {
+        w: (width) / 2 + 50,
+        h: height - 117 - 90 * 2
+    },
+    branch3: {
+        w: (width) / 2 + 50,
+        h: height - 117 - 90 * 3
+    },
+    branch4: {
+        w: (width) / 2 + 50,
+        h: height - 117 - 90 * 4
+    }
+}
 
 //declare global game object
 var game = new Phaser.Game(width, height, Phaser.CANVAS, 'money-tree', {
@@ -38,12 +77,12 @@ function preload() {
 var line1;
 
 function create() {
+    game.stage.backgroundColor = '#FFFFFF';
+    game.time.events.loop(800, function () {
+        spawnAcorn();
+    }, game);
+    game.time.events.loop(1000, updateTimer, game);
 
-    game.stage.backgroundColor = '#00000';
-
-    var squirrel = game.add.sprite(100, height - 30, "squirrel")
-    squirrel.scale.setTo(0.05, 0.05);
-    squirrel.anchor.set(0.5);
 
     var trunk = game.add.sprite((width) / 2, height - 115, 'trunk')
     trunk.scale.setTo(0.9, 0.9)
@@ -78,14 +117,21 @@ function create() {
 
         rightBranch1.scale.setTo(0.8)
     }
+
     if (stage3) {
         var tree3 = game.add.sprite((width) / 2 - 20, height - 117 - 90 * 3, 'tree')
         tree3.scale.setTo(0.9, 0.9)
         tree3.anchor.set(0.5);
+
+        var leftBranch3 = game.add.sprite(leftBranchCoordinates.branch3.w, leftBranchCoordinates.branch3.h, 'right_branch')
+        leftBranch3.scale.setTo(0.6, 0.6)
+        leftBranch3.anchor.set(0.5);
+
+        leftBranch1.scale.set(0.8)
     }
     if (stage4) {
         var tree4 = game.add.sprite((width) / 2 - 20, height - 117 - 90 * 4, 'tree')
-        tree4.scale.setTo(0.9, 0.9)
+        tree4.scale.setTo(0.9, 0.9);
         tree4.anchor.set(0.5);
     }
 
@@ -99,10 +145,10 @@ function create() {
         tree6.anchor.set(0.5);
     }
 
-    // handle1 = game.add.sprite(100, 200, 'balls', 0);
-    // handle1.anchor.set(0.5);
-    // handle1.inputEnabled = true;
-    // handle1.input.enableDrag(true);
+
+    var squirrel = game.add.sprite(width / 2, height - 30, "squirrel")
+    squirrel.scale.setTo(0.05, 0.05);
+    squirrel.anchor.set(0.5);
     // handle2 = game.add.sprite(400, 300, 'balls', 0);
     // handle2.anchor.set(0.5);
     // handle2.inputEnabled = true;
@@ -135,6 +181,15 @@ function update() {
         stage5 = true;
         create();
     }
+}
+
+function updateTimer() {
+    currentTime++;
+    // console.log(currentTime)
+}
+
+function spawnAcorn() {
+
 }
 
 function render() {
