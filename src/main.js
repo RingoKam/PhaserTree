@@ -32,7 +32,7 @@ function preload() {
     game.load.spritesheet('left_branch', 'assets/images/left_branch.png', 640, 640);
     game.load.spritesheet('right_branch', 'assets/images/right-branch.png', 640, 640);
     game.load.spritesheet('tree', 'assets/images/tree1.png', 640, 640);
-    game.load.spritesheet('squirrel', 'assets/images/squirrel.png', 640, 640);
+    game.load.spritesheet('squirrel', 'assets/images/squirrel.png', 1110, 1226);
 }
 
 var line1;
@@ -41,6 +41,9 @@ function create() {
 
     game.stage.backgroundColor = '#00000';
 
+    var squirrel = game.add.sprite(100, height - 30, "squirrel")
+    squirrel.scale.setTo(0.05, 0.05);
+    squirrel.anchor.set(0.5);
 
     var trunk = game.add.sprite((width) / 2, height - 115, 'trunk')
     trunk.scale.setTo(0.9, 0.9)
